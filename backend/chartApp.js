@@ -22,7 +22,7 @@ const fetchingJSON = async (myArr) => {
   }
   else {
     data = await fetch('assets/tracks.json')
-    .then(res => res)
+    .then(res => res.json())
     .then(data => {
       console.log("data: ", data);
       Array.from(data.items).forEach((val, index) => {
