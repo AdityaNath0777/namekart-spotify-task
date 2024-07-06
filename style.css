@@ -8,6 +8,7 @@
 
 #root-app {
     min-height: 100vh;
+    position: relative;
 }
 
 #app-name {
@@ -21,7 +22,6 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  position: relative;
 }
 
 #main-container {
