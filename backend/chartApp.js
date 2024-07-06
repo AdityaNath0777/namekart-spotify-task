@@ -1,29 +1,23 @@
 import drawChart from "./chartServices.js";
+import tracks from "./index.js";
 
 const fetchingJSON = async (myArr) => {
-  console.log("starting to fetch JSON");
-  // if we not use await, other functions will be called immediately
-  await fetch("assets/tracks.json")
-    .then((response) => response.json())
-    .then((data) => {
-      Array.from(data.items).forEach((val, index, array) => {
-        let myObj = new Object();
-        myObj.album_type = val.album.album_type;
-        myObj.name = val.name;
-        myObj.popularity = val.popularity;
-        myObj.release_date = val.album.release_date;
+  let data = await tracks.tracks;
+  console.log("data: ", data);
+  Array.from(data.items).forEach((val, index) => {
+    let myObj = new Object();
+    myObj.album_type = val.album.album_type;
+    myObj.name = val.name;
+    myObj.popularity = val.popularity;
+    myObj.release_date = val.album.release_date;
 
-        // extracting year from release date
-        myObj.release_year = Number(val.album.release_date.split("-")[0]);
-        myObj.duration_ms = val.duration_ms;
+    // extracting year from release date
+    myObj.release_year = Number(val.album.release_date.split("-")[0]);
+    myObj.duration_ms = val.duration_ms;
 
-        // appending the object inside the Array for dataset
-        myArr[index] = myObj;
-      });
-    })
-    .catch((error) => console.log(error));
-
-  // console.log("going to fetch labels");
+    // appending the object inside the Array for dataset
+    myArr[index] = myObj;
+  });
 
   // console.log("enable chart has been called");
   enableChartButton();
