@@ -21,7 +21,7 @@ const fetchingJSON = async (myArr) => {
     });
   }
   else {
-    data = await fetch('assets/tracks.json')
+    await fetch('assets/tracks.json')
     .then(res => res.json())
     .then(data => {
       console.log("data: ", data);
