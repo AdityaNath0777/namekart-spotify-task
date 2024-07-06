@@ -57,6 +57,7 @@ function enableChartButton() {
   let chartBtns = Array.from(document.querySelectorAll(".chart-btn"));
   chartBtns.forEach((btn) => {
     btn.disabled = false;
+    btn.classList.remove('disabled-btn');
   });
 
   chartBtns.forEach((e) => {
