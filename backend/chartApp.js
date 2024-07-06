@@ -3,21 +3,47 @@ import tracks from "./index.js";
 
 const fetchingJSON = async (myArr) => {
   let data = await tracks.tracks;
-  console.log("data: ", data);
-  Array.from(data.items).forEach((val, index) => {
-    let myObj = new Object();
-    myObj.album_type = val.album.album_type;
-    myObj.name = val.name;
-    myObj.popularity = val.popularity;
-    myObj.release_date = val.album.release_date;
+  if (data !== undefined || data !== null) {
+    console.log("data: ", data);
+    Array.from(data.items).forEach((val, index) => {
+      let myObj = new Object();
+      myObj.album_type = val.album.album_type;
+      myObj.name = val.name;
+      myObj.popularity = val.popularity;
+      myObj.release_date = val.album.release_date;
 
-    // extracting year from release date
-    myObj.release_year = Number(val.album.release_date.split("-")[0]);
-    myObj.duration_ms = val.duration_ms;
+      // extracting year from release date
+      myObj.release_year = Number(val.album.release_date.split("-")[0]);
+      myObj.duration_ms = val.duration_ms;
 
-    // appending the object inside the Array for dataset
-    myArr[index] = myObj;
-  });
+      // appending the object inside the Array for dataset
+      myArr[index] = myObj;
+    });
+  }
+  else {
+    data = await fetch('assets/tracks.json')
+    .then(res => res)
+    .then(data => {
+      console.log("data: ", data);
+      Array.from(data.items).forEach((val, index) => {
+        let myObj = new Object();
+        myObj.album_type = val.album.album_type;
+        myObj.name = val.name;
+        myObj.popularity = val.popularity;
+        myObj.release_date = val.album.release_date;
+    
+        // extracting year from release date
+        myObj.release_year = Number(val.album.release_date.split("-")[0]);
+        myObj.duration_ms = val.duration_ms;
+    
+        // appending the object inside the Array for dataset
+        myArr[index] = myObj;
+      });
+      
+    })
+    .catch(error => console.log("fetching JSON :: Error", error))
+
+  }
 
   // console.log("enable chart has been called");
   enableChartButton();
@@ -57,7 +83,7 @@ function enableChartButton() {
   let chartBtns = Array.from(document.querySelectorAll(".chart-btn"));
   chartBtns.forEach((btn) => {
     btn.disabled = false;
-    btn.classList.remove('disabled-btn');
+    btn.classList.remove("disabled-btn");
   });
 
   chartBtns.forEach((e) => {
